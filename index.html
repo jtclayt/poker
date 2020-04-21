@@ -58,7 +58,7 @@
         </span>
         <span id="game-menu" class="hidden">
           <button id="discard-btn">Discard Selected ($25)</button>
-          <button id="fold-btn">Fold</button>
+          <button id="hold-btn">Hold All ($0)</button>
         </span>
         <span id="end-menu" class="hidden">
           <button id="reset-btn">Reset</button>
@@ -66,18 +66,20 @@
       </section>
       <article id='rules'>
         <h2>Game Rules</h2>
-        <p>
-          This is a simplified version of 5 card draw poker. To start the player must ante $25 to
-          draw 5 cards. If the player does not have enough money they can not ante and must refresh
-          the page.
-        </p>
-        <p>
-          Once the player has drawn 5 cards they can click on ones that they would like to discard.
-          Selected cards to discard will be flipped over and can be unflipped if the player decides
-          to keep it instead. Once the player is happy with the cards to discard select discard,
-          this costs an additional $25.
-        </p>
-        <summary>
+        <section>
+          <p>
+            This is a simplified version of 5 card draw poker. To start the player must ante $25 to
+            draw 5 cards. If the player does not have enough money they can not ante and must refresh
+            the page.
+          </p>
+          <p>
+            Once the player has drawn 5 cards they can click on ones that they would like to discard.
+            Selected cards to discard will be flipped over and can be unflipped if the player decides
+            to keep it instead. Once the player is happy with the cards to discard select discard,
+            this costs an additional $25.
+          </p>
+        </section>
+        <section>
           <h3>Poker Hands</h3>
           <ol>
             <li>Royal Flush: Ace, King, Queen, Jack, 10 of the same suit</li>
@@ -91,7 +93,7 @@
             <li>Pair: Two of the same card</li>
             <li>High Card: If no other hand, highest value card in hand</li>
           </ol>
-        </summary>
+        </section>
         <button id="close-rules-btn">Close</button>
       </article>
     </main>

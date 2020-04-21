@@ -7,15 +7,39 @@
 
 /* HTML selector rules */
 article {
-  position: fixed;
   top: 10%;
   left: 15%;
   width: 64%;
   height: 80%;
   padding: 0 3%;
-  flex-direction: column;
   background-color: rgba(211, 211, 211, 0.979);
+}
+
+article > section > p {
+  text-indent: 40px;
+}
+
+article, aside {
+  position: fixed;
+  flex-direction: column;
   border: 3px solid orangered;
+}
+
+article, aside, header, main > section {
+  display: flex;
+  align-items: center;
+}
+
+article, aside, header, .white-bg {
+  justify-content: space-evenly;
+}
+
+aside {
+  top: 40%;
+  left: 40%;
+  width: 20%;
+  height: 20%;
+  background-color: rgba(211, 211, 211, 0.651);
 }
 
 body {
@@ -46,7 +70,7 @@ button, p, ol {
 
 header {
   height: 10vh;
-  background-color: rgba(182, 182, 182, 0.671);
+  background-color: rgba(182, 182, 182, 0.863);
 }
 
 h1 {
@@ -65,15 +89,6 @@ h1, h2, h3 {
   text-align: center;
 }
 
-header, section, article {
-  display: flex;
-  align-items: center;
-}
-
-header, .white-bg, article {
-  justify-content: space-evenly;
-}
-
 img {
   height: 100%;
 }
@@ -83,7 +98,7 @@ main {
   margin: 20px auto;
 }
 
-section {
+main > section {
   flex-wrap: wrap;
   justify-content: center;
   border: 3px solid rgb(187, 187, 187);
