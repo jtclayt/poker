@@ -11,7 +11,6 @@ article {
   left: 15%;
   width: 64%;
   padding: 0 3%;
-  background-color: rgba(235, 235, 235, 0.979);
 }
 
 article > section > p {
@@ -22,6 +21,7 @@ article, aside {
   position: absolute;
   flex-direction: column;
   border: 3px solid orangered;
+  background-color: rgba(235, 235, 235, 0.979);
 }
 
 article, aside, header, main > section {
@@ -38,7 +38,6 @@ aside {
   left: 30%;
   width: 40%;
   height: 20%;
-  background-color: rgba(235, 235, 235, 0.788);
 }
 
 body {
