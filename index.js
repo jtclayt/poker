@@ -104,7 +104,7 @@
     let canBet = bet();
     if (canBet) {
       id('start-menu').classList.add('hidden');
-     id('game-menu').classList.remove('hidden');
+      id('game-menu').classList.remove('hidden');
       deal();
     }
   }
