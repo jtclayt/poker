@@ -10,7 +10,6 @@ article {
   top: 10%;
   left: 15%;
   width: 64%;
-  height: 80%;
   padding: 0 3%;
   background-color: rgba(235, 235, 235, 0.979);
 }
@@ -20,7 +19,7 @@ article > section > p {
 }
 
 article, aside {
-  position: fixed;
+  position: absolute;
   flex-direction: column;
   border: 3px solid orangered;
 }
