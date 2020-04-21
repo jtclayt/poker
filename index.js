@@ -495,24 +495,24 @@
    * cards for each hand to break tie breakers.
    */
   function getCardCounts(hand) {
-    const NUM_CARDS = {FOUR: 4, THREE: 3, TWO: 2, ONE: 1}
+    const NUM_CARDS_IN_HAND = {FOUR: 4, THREE: 3, TWO: 2, ONE: 1};
     let counts = {hasFour: false, hasThree: false, hasTwoPair: false, hasPair: false};
     let cardCounts = countCards(hand);
     let top, pair, single;
     cardCounts.forEach((value, i) => {
-      if (value === NUM_CARDS.FOUR) {
+      if (value === NUM_CARDS_IN_HAND.FOUR) {
         counts.hasFour = true;
         top = i;
-      } else if (value === NUM_CARDS.THREE) {
+      } else if (value === NUM_CARDS_IN_HAND.THREE) {
         counts.hasThree = true;
         top = i;
-      } else if (value === NUM_CARDS.TWO && counts.hasPair) {
+      } else if (value === NUM_CARDS_IN_HAND.TWO && counts.hasPair) {
         counts.hasTwoPair = true;
         top = i;
-      } else if (value === NUM_CARDS.TWO) {
+      } else if (value === NUM_CARDS_IN_HAND.TWO) {
         counts.hasPair = true;
         pair = i;
-      } else if (value === NUM_CARDS.ONE) {
+      } else if (value === NUM_CARDS_IN_HAND.ONE) {
         single = i;
       }
     });
