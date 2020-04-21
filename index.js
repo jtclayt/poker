@@ -31,7 +31,7 @@
     TWO_PAIR: 3,
     PAIR: 2,
     HIGH_CARD: 1
-  }
+  };
 
   window.addEventListener('load', init);
 
@@ -495,32 +495,24 @@
    * cards for each hand to break tie breakers.
    */
   function getCardCounts(hand) {
-    let counts = {
-      hasFour: false,
-      hasThree: false,
-      hasTwoPair: false,
-      hasPair: false,
-    }
-    let cardCount = new Array(NUM_CARDS_IN_SUIT).fill(0);
-    hand.forEach(card => {
-      let cardNum = Math.floor(card.num % NUM_CARDS_IN_SUIT);
-      cardCount[cardNum]++;
-    });
+    const NUM_CARDS = {FOUR: 4, THREE: 3, TWO: 2, ONE: 1}
+    let counts = {hasFour: false, hasThree: false, hasTwoPair: false, hasPair: false};
+    let cardCounts = countCards(hand);
     let top, pair, single;
-    cardCount.forEach((value, i) => {
-      if (value === 4) {
+    cardCounts.forEach((value, i) => {
+      if (value === NUM_CARDS.FOUR) {
         counts.hasFour = true;
         top = i;
-      } else if (value === 3) {
+      } else if (value === NUM_CARDS.THREE) {
         counts.hasThree = true;
         top = i;
-      } else if (value === 2 && counts.hasPair) {
+      } else if (value === NUM_CARDS.TWO && counts.hasPair) {
         counts.hasTwoPair = true;
         top = i;
-      } else if (value === 2) {
+      } else if (value === NUM_CARDS.TWO) {
         counts.hasPair = true;
         pair = i;
-      } else if (value === 1) {
+      } else if (value === NUM_CARDS.ONE) {
         single = i;
       }
     });
@@ -528,6 +520,21 @@
     counts.pair = pair;
     counts.single = single;
     return counts;
+  }
+
+  /**
+   * Creates an array with indices corresponding to card values and counts the number of time each
+   * index appears.
+   * @param {array} hand - The array representing the players hand
+   * @return {array} An array representing the number counted of that index value.
+   */
+  function countCards(hand) {
+    let cardCounts = new Array(NUM_CARDS_IN_SUIT).fill(0);
+    hand.forEach(card => {
+      let cardNum = Math.floor(card.num % NUM_CARDS_IN_SUIT);
+      cardCounts[cardNum]++;
+    });
+    return cardCounts;
   }
 
   // JS Helper functions
