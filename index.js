@@ -20,6 +20,18 @@
     TIE: 'It was a tie.',
     NO_MONEY: 'You don\'t have enough money to bet. Refresh page to buy back in.'
   };
+  const HAND_RANKS = {
+    ROYAL: 10,
+    STRAIGHT_FLUSH: 9,
+    FOUR_OF_KIND: 8,
+    FULL_HOUSE: 7,
+    FLUSH: 6,
+    STRAIGHT: 5,
+    THREE_OF_KIND: 4,
+    TWO_PAIR: 3,
+    PAIR: 2,
+    HIGH_CARD: 1
+  }
 
   window.addEventListener('load', init);
 
@@ -226,7 +238,7 @@
   function showCpuCards() {
     for (let i = 1; i <= HAND_SIZE; i++) {
       let cpuImg = qs(`#cpu-card${i} img`);
-      let cpuCard = GAME.cpuHand[i-1];
+      let cpuCard = GAME.cpuHand[i - 1];
       setImg(cpuCard, cpuImg, true);
     }
   }
@@ -334,13 +346,13 @@
       hasRoyal = checkRoyal();
     }
     if (hasRoyal) {
-      results.rank = 10;
+      results.rank = HAND_RANKS.ROYAL;
     } else if (hasStraightFlush) {
-      results.rank = 9;
+      results.rank = HAND_RANKS.STRAIGHT_FLUSH;
     } else if (hasFlush) {
-      results.rank = 6;
+      results.rank = HAND_RANKS.FLUSH;
     } else if (hasStraight) {
-      results.rank = 5;
+      results.rank = HAND_RANKS.STRAIGHT;
     } else {
       results.rank = 0;
     }
@@ -382,7 +394,8 @@
    */
   function checkRoyal(hand) {
     let sortedValues = getSortedNumFaceValues(hand);
-    for (let i = 8; i <= sortedValues.length; i++) {
+    const VALUE_OF_10 = 8;
+    for (let i = VALUE_OF_10; i <= sortedValues.length; i++) {
       if (sortedValues[i] !== i) {
         return false;
       }
@@ -397,54 +410,28 @@
    * @return {object} Poker hand ranking of given cards and the card values of multiples found.
    */
   function checkMultiples(hand) {
-    let cardCount = new Array(NUM_CARDS_IN_SUIT).fill(0);
-    hand.forEach( card => {
-      let cardNum = Math.floor(card.num % NUM_CARDS_IN_SUIT);
-      cardCount[cardNum]++;
-    });
-    let hasFour = false;
-    let hasThree = false;
-    let hasTwoPair = false;
-    let hasPair = false;
+    let counts = getCardCounts(hand);
     let results = {};
-    let top, pair, single;
-    cardCount.forEach((value, i) => {
-      if (value === 4) {
-        hasFour = true;
-        top = i;
-      } else if (value === 3) {
-        hasThree = true;
-        top = i;
-      } else if (value === 2 && hasPair) {
-        hasTwoPair = true;
-        top = i;
-      } else if (value === 2) {
-        hasPair = true;
-        pair = i;
-      } else if (value === 1) {
-        single = i;
-      }
-    });
-    if (top) {
-      results.top = top;
-      results.pair = pair;
-    } else if (pair) {
-      results.top = pair;
+    if (counts.top) {
+      results.top = counts.top;
+      results.pair = counts.pair;
+    } else if (counts.pair) {
+      results.top = counts.pair;
     } else {
       results.top = single;
     }
-    if (hasFour) {
-      results.rank = 8;
-    } else if (hasThree && hasPair) {
-      results.rank = 7;
-    } else if (hasThree) {
-      results.rank = 4;
-    } else if (hasTwoPair) {
-      results.rank = 3;
-    } else if (hasPair) {
-      results.rank = 2;
+    if (counts.hasFour) {
+      results.rank = HAND_RANKS.FOUR_OF_KIND;
+    } else if (counts.hasThree && counts.hasPair) {
+      results.rank = HAND_RANKS.FULL_HOUSE;
+    } else if (counts.hasThree) {
+      results.rank = HAND_RANKS.THREE_OF_KIND;
+    } else if (counts.hasTwoPair) {
+      results.rank = HAND_RANKS.TWO_PAIR;
+    } else if (counts.hasPair) {
+      results.rank = HAND_RANKS.PAIR;
     } else {
-      results.rank = 1;
+      results.rank = HAND_RANKS.HIGH_CARD;
     }
     return results;
   }
@@ -475,7 +462,7 @@
    */
   function getSortedNumFaceValues(hand) {
     let values = [];
-    hand.forEach( card => {
+    hand.forEach(card => {
       let numValue = Math.floor(card.num % NUM_CARDS_IN_SUIT);
       values.push(numValue);
     });
@@ -494,11 +481,53 @@
    */
   function getHighestCard(hand) {
     let highCard = 0;
-    hand.forEach( card => {
+    hand.forEach(card => {
       let cardVal = Math.floor(card.num % NUM_CARDS_IN_SUIT);
       highCard = Math.max(highCard, cardVal);
     });
     return highCard;
+  }
+
+  /**
+   * Counts the values of multiples of the same face card to determine poker hands.
+   * @param {array} hand - The array representing the players hand
+   * @return {object} An object that tells whether the player has certain hands and the value of
+   * cards for each hand to break tie breakers.
+   */
+  function getCardCounts(hand) {
+    let counts = {
+      hasFour = false,
+      hasThree = false,
+      hasTwoPair = false,
+      hasPair = false,
+    }
+    let cardCount = new Array(NUM_CARDS_IN_SUIT).fill(0);
+    hand.forEach(card => {
+      let cardNum = Math.floor(card.num % NUM_CARDS_IN_SUIT);
+      cardCount[cardNum]++;
+    });
+    let top, pair, single;
+    cardCount.forEach((value, i) => {
+      if (value === 4) {
+        counts.hasFour = true;
+        top = i;
+      } else if (value === 3) {
+        counts.hasThree = true;
+        top = i;
+      } else if (value === 2 && hasPair) {
+        counts.hasTwoPair = true;
+        top = i;
+      } else if (value === 2) {
+        counts.hasPair = true;
+        pair = i;
+      } else if (value === 1) {
+        single = i;
+      }
+    });
+    counts.top = top;
+    counts.pair = pair;
+    counts.single = single;
+    return counts;
   }
 
   // JS Helper functions
