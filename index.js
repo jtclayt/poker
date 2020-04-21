@@ -418,7 +418,7 @@
     } else if (counts.pair) {
       results.top = counts.pair;
     } else {
-      results.top = single;
+      results.top = counts.single;
     }
     if (counts.hasFour) {
       results.rank = HAND_RANKS.FOUR_OF_KIND;
@@ -496,10 +496,10 @@
    */
   function getCardCounts(hand) {
     let counts = {
-      hasFour = false,
-      hasThree = false,
-      hasTwoPair = false,
-      hasPair = false,
+      hasFour: false,
+      hasThree: false,
+      hasTwoPair: false,
+      hasPair: false,
     }
     let cardCount = new Array(NUM_CARDS_IN_SUIT).fill(0);
     hand.forEach(card => {
@@ -514,7 +514,7 @@
       } else if (value === 3) {
         counts.hasThree = true;
         top = i;
-      } else if (value === 2 && hasPair) {
+      } else if (value === 2 && counts.hasPair) {
         counts.hasTwoPair = true;
         top = i;
       } else if (value === 2) {

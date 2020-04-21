@@ -64,8 +64,9 @@ button:hover {
   background-color: burlywood;
 }
 
-button, p, ol {
+button, p, ol, ul {
   font-size: 1.3rem;
+  margin: 10px;
 }
 
 header {
