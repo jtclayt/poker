@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--
+  Name: Justin Clayton
+  Date: April 17, 2020
+  Section: CSE 154 AD
+  This is the index.html page for my CP2  webpage.
+-->
+<html>
+  <head>
+    <meta>
+    <title>CP2: Poker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="index.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <img src="./assets/spade.png" alt="Spade card icon">
+      <img src="./assets/heart.png" alt="Heart card icon">
+      <h1>5 Card Draw Poker Game</h1>
+      <img src="./assets/club.png" alt="Club card icon">
+      <img src="./assets/diamond.png" alt="Diamond card icon">
+    </header>
+
+    <main>
+      <!--
+        All cards in game retrieved from Wikimedia which allows free use of all images:
+        https://commons.wikimedia.org/wiki/File:English_pattern_playing_cards_deck_PLUS.svg
+      -->
+      <section class="white-bg">
+        <h2>Opponents cards</h2>
+      </section>
+      <section class="hand">
+        <figure id="cpu-card1"></figure>
+        <figure id="cpu-card2"></figure>
+        <figure id="cpu-card3"></figure>
+        <figure id="cpu-card4"></figure>
+        <figure id="cpu-card5"></figure>
+      </section>
+      <section class="white-bg">
+        <p><strong>Your money:</strong> $<span id="player-money">500</span></p>
+        <p><strong>Current pot:</strong> $<span id="pot">0</span></p>
+      </section>
+      <section class="white-bg">
+        <h2>Your cards</h2>
+      </section>
+      <section id="player-hand" class="hand">
+        <figure id="player-card1"></figure>
+        <figure id="player-card2"></figure>
+        <figure id="player-card3"></figure>
+        <figure id="player-card4"></figure>
+        <figure id="player-card5"></figure>
+      </section>
+      <section class="white-bg">
+        <button id="open-rules-btn">Rules</button>
+        <span id="start-menu">
+          <button id="start-btn">Ante ($25)</button>
+        </span>
+        <span id="game-menu" class="hidden">
+          <button id="discard-btn">Discard Selected ($25)</button>
+          <button id="fold-btn">Fold</button>
+        </span>
+        <span id="end-menu" class="hidden">
+          <button id="reset-btn">Reset</button>
+        </span>
+      </section>
+      <article id='rules'>
+        <h2>Game Rules</h2>
+        <p>
+          This is a simplified version of 5 card draw poker. To start the player must ante $25 to
+          draw 5 cards. If the player does not have enough money they can not ante and must refresh
+          the page.
+        </p>
+        <p>
+          Once the player has drawn 5 cards they can click on ones that they would like to discard.
+          Selected cards to discard will be flipped over and can be unflipped if the player decides
+          to keep it instead. Once the player is happy with the cards to discard select discard,
+          this costs an additional $25.
+        </p>
+        <summary>
+          <h3>Poker Hands</h3>
+          <ol>
+            <li>Royal Flush: Ace, King, Queen, Jack, 10 of the same suit</li>
+            <li>Straight Flush: Five cards in a row of the same suit</li>
+            <li>Four of a Kind: Four of the same card</li>
+            <li>Full House: A pair and three of a kind</li>
+            <li>Flush: Five cards of the same suit</li>
+            <li>Straight: Five cards in a row any suit</li>
+            <li>Three of a Kind: Three of the same card</li>
+            <li>Two Pair: Two pairs of cards</li>
+            <li>Pair: Two of the same card</li>
+            <li>High Card: If no other hand, highest value card in hand</li>
+          </ol>
+        </summary>
+        <button id="close-rules-btn">Close</button>
+      </article>
+    </main>
+  </body>
+</html>

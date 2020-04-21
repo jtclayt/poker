@@ -1,0 +1,115 @@
+/*
+  Name: Justin Clayton
+  Date: Aptil 17, 2020
+  Section: CSE 154 AD
+  This is the main style CSS page for index.html and contains styles to complete poker game.
+*/
+
+/* HTML selector rules */
+article {
+  position: fixed;
+  top: 10%;
+  left: 15%;
+  width: 64%;
+  height: 80%;
+  padding: 0 3%;
+  flex-direction: column;
+  background-color: rgba(211, 211, 211, 0.979);
+  border: 3px solid orangered;
+}
+
+body {
+  background-color: #35654d;
+  min-width: 800px;
+  min-height: 800px;
+}
+
+body, h1, h2 {
+  margin: 0;
+}
+
+button {
+  width: 250px;
+  margin: 0 20px;
+  background-color: rgb(245, 198, 195);
+  border: 2px solid darkgoldenrod;
+  position: relative;
+}
+
+button:hover {
+  background-color: burlywood;
+}
+
+button, p, ol {
+  font-size: 1.3rem;
+}
+
+header {
+  height: 10vh;
+  background-color: rgba(182, 182, 182, 0.671);
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.6rem;
+}
+
+h1, h2, h3 {
+  text-align: center;
+}
+
+header, section, article {
+  display: flex;
+  align-items: center;
+}
+
+header, .white-bg, article {
+  justify-content: space-evenly;
+}
+
+img {
+  height: 100%;
+}
+
+main {
+  width: 80%;
+  margin: 20px auto;
+}
+
+section {
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 3px solid rgb(187, 187, 187);
+}
+
+/* Class rules */
+.hand > figure {
+  width: 125px;
+  height: 250px;
+  border: 2px solid black;
+}
+
+.hand > figure > img {
+  width: 100%;
+}
+
+.hidden {
+  display: none;
+}
+
+.white-bg {
+  background-color: rgba(255, 255, 255, 0.4);
+  height: 55px;
+}
+
+/* ID selector rules */
+#player-hand > figure:hover {
+  border-color: gold;
+}
