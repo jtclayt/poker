@@ -2,14 +2,17 @@
  * Name: Justin Clayton
  * Date: Aptil 17, 2020
  * Section: CSE 154 AD
- * This is the main js page to complete the logic for index.html.
+ * This is the main js page to complete the logic for index.html. It sets up and plays a simplified
+ * game of 5 card draw poker. It is a bit more involved than initially intended and as much testing
+ * was done as was feasible. It appears to handle the majority of win conditions correct, but there
+ * is a chance that some win cases could have bugs.
  */
 'use strict';
 (function() {
   // Constants that define basic game function
   const SUITS = ['spade', 'heart', 'club', 'diamond'];
   const CARDS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
-  const GAME = {playerMoney: 500};
+  const GAME = {playerMoney: 250};
   const BET_AMOUNT = 25;
   const NUM_CARDS = 52;
   const NUM_CARDS_IN_SUIT = 13;
@@ -65,7 +68,10 @@
 
   /** Closes any notification popups the player gets. */
   function onClosePopup() {
-    qs('main aside').remove();
+    let popup = qs('main aside');
+    if (popup) {
+      popup.remove();
+    }
   }
 
   /** Handles discarding selected cards and re dealing new ones. */
@@ -85,6 +91,7 @@
 
   /** Handles the logic for reseting the game. */
   function onReset() {
+    onClosePopup();
     resetGameState();
     updateMoney();
     clearImages();
@@ -94,16 +101,17 @@
 
   /** Switches the menu when the game is started and begins game. */
   function onStart() {
-    id('start-menu').classList.add('hidden');
-    id('game-menu').classList.remove('hidden');
     let canBet = bet();
     if (canBet) {
+      id('start-menu').classList.add('hidden');
+     id('game-menu').classList.remove('hidden');
       deal();
     }
   }
 
   /** Shows or hides the rules text box. */
   function onToggleRules() {
+    onClosePopup();
     id('rules').classList.toggle('hidden');
   }
 

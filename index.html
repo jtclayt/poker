@@ -3,7 +3,8 @@
   Name: Justin Clayton
   Date: April 17, 2020
   Section: CSE 154 AD
-  This is the index.html page for my CP2  webpage.
+  This is the index.html page for my CP2  webpage. It has all the basic content to lay out the
+  poker game which will be played.
 -->
 <html>
   <head>
@@ -70,18 +71,20 @@
           <p>
             This is a simplified version of 5 card draw poker. To start the player must ante $25 to
             draw 5 cards. If the player does not have enough money they can not ante and must
-            refreshthe page.
+            refresh the page.
           </p>
           <p>
-            Once the player has drawn 5 cards they can click on ones that they would like to
-            discard. Selected cards to discard will be flipped over and can be unflipped if the
-            player decides to keep it instead. Once the player is happy with the cards to discard
-            select discard, this costs an additional $25.
+            Once the player has drawn 5 cards they can click on cards that they would like to
+            discard, multiple can be selected. Selected cards to discard will be flipped over and
+            can be unflipped if the player decides to keep it instead. Once the player is happy
+            with the cards to discard select discard, this costs an additional $25. If they cannot
+            pay the $25 then they can choose not to discard any cards and continue for free.
           </p>
           <p><strong>Game notes:</strong></p>
           <ul>
             <li>
-              This game considers ace to be only high, ie. ace can not be played in A, 2, 3, 4, 5.
+              This game considers ace to be only high, ie. ace can not be played in straight
+              A, 2, 3, 4, 5.
             </li>
             <li>
               Kicker cards are not considered in determining a winner. If player and computer
@@ -92,16 +95,16 @@
         <section>
           <h3>Poker Hands</h3>
           <ol>
-            <li>Royal Flush: Ace, King, Queen, Jack, 10 of the same suit</li>
-            <li>Straight Flush: Five cards in a row of the same suit</li>
-            <li>Four of a Kind: Four of the same card</li>
-            <li>Full House: A pair and three of a kind</li>
-            <li>Flush: Five cards of the same suit</li>
-            <li>Straight: Five cards in a row any suit</li>
-            <li>Three of a Kind: Three of the same card</li>
-            <li>Two Pair: Two pairs of cards</li>
-            <li>Pair: Two of the same card</li>
-            <li>High Card: If no other hand, highest value card in hand</li>
+            <li><strong>Royal Flush:</strong> Ace, King, Queen, Jack, and 10 of the same suit</li>
+            <li><strong>Straight Flush:</strong> Five cards in a row of the same suit</li>
+            <li><strong>Four of a Kind:</strong> Four of the same card</li>
+            <li><strong>Full House:</strong> A pair and three of a kind</li>
+            <li><strong>Flush:</strong> Five cards of the same suit</li>
+            <li><strong>Straight:</strong> Five cards in a row any suit</li>
+            <li><strong>Three of a Kind:</strong> Three of the same card</li>
+            <li><strong>Two Pair:</strong> Two pairs of cards</li>
+            <li><strong>Pair:</strong> Two of the same card</li>
+            <li><strong>High Card:</strong> If no other hand, highest value card in hand</li>
           </ol>
         </section>
         <button id="close-rules-btn">Close</button>

@@ -2,7 +2,7 @@
   Name: Justin Clayton
   Date: Aptil 17, 2020
   Section: CSE 154 AD
-  This is the main style CSS page for index.html and contains styles to complete poker game.
+  This is the main style CSS page for index.html and contains rules to style the poker game.
 */
 
 /* HTML selector rules */
@@ -12,7 +12,7 @@ article {
   width: 64%;
   height: 80%;
   padding: 0 3%;
-  background-color: rgba(211, 211, 211, 0.979);
+  background-color: rgba(235, 235, 235, 0.979);
 }
 
 article > section > p {
@@ -36,10 +36,10 @@ article, aside, header, .white-bg {
 
 aside {
   top: 40%;
-  left: 40%;
-  width: 20%;
+  left: 30%;
+  width: 40%;
   height: 20%;
-  background-color: rgba(211, 211, 211, 0.651);
+  background-color: rgba(235, 235, 235, 0.788);
 }
 
 body {
