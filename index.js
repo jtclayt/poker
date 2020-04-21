@@ -6,20 +6,22 @@
  */
 'use strict';
 (function() {
-  window.addEventListener('load', init);
-
   // Constants that define basic game function
   const SUITS = ['spade', 'heart', 'club', 'diamond'];
   const CARDS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a'];
   const GAME = {playerMoney: 500};
   const BET_AMOUNT = 25;
   const NUM_CARDS = 52;
+  const NUM_CARDS_IN_SUIT = 13;
+  const HAND_SIZE = 5;
   const MESSAGES = {
     WIN: 'You won!',
     LOSE: 'You lost',
     TIE: 'It was a tie.',
     NO_MONEY: 'You don\'t have enough money to bet. Refresh page to buy back in.'
   };
+
+  window.addEventListener('load', init);
 
   /** Sets up the event listeners and state to play the game. */
   function init() {
@@ -32,7 +34,6 @@
     resetGameState();
     setFigureEvents();
   }
-
 
   // Event Listeners
   /**
@@ -61,7 +62,7 @@
     id('end-menu').classList.remove('hidden');
     let canBet = bet();
     if (canBet) {
-      GAME.playerDiscard.forEach( (isDiscarding, i) => {
+      GAME.playerDiscard.forEach((isDiscarding, i) => {
         if (isDiscarding) {
           GAME.playerHand[i] = dealCard();
         }
@@ -113,7 +114,7 @@
 
   /** Clears out the card images between games. */
   function clearImages() {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= HAND_SIZE; i++) {
       qs(`#cpu-card${i} img`).remove();
       qs(`#player-card${i} img`).remove();
     }
@@ -137,7 +138,7 @@
 
   /** Deals the specified number of cards to each player, default is 5 and 5. */
   function deal() {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= HAND_SIZE; i++) {
       let cpuCard = dealCard();
       GAME.cpuHand.push(cpuCard);
       let playerCard = dealCard();
@@ -176,7 +177,7 @@
 
   /** Refreshes the images on the page. */
   function refreshImages() {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= HAND_SIZE; i++) {
       let cpuImg = qs(`#cpu-card${i} img`);
       let playerImg = qs(`#player-card${i} img`);
       if (!cpuImg) {
@@ -187,15 +188,15 @@
         playerImg = document.createElement('img');
         id(`player-card${i}`).appendChild(playerImg);
       }
-      setImg(GAME.cpuHand[i-1], cpuImg, false);
-      setImg(GAME.playerHand[i-1], playerImg, true);
+      setImg(GAME.cpuHand[i - 1], cpuImg, false);
+      setImg(GAME.playerHand[i - 1], playerImg, true);
     }
   }
 
   /** Reintializes a new rounds game state. */
   function resetGameState() {
     GAME.drawnCards = [];
-    GAME.cpuHand = [],
+    GAME.cpuHand = [];
     GAME.playerHand = [];
     GAME.playerDiscard = [false, false, false, false, false];
     GAME.pot = 0;
@@ -223,7 +224,7 @@
 
   /** Shows the opponents cards after the discard round to see who won. */
   function showCpuCards() {
-    for(let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= HAND_SIZE; i++) {
       let cpuImg = qs(`#cpu-card${i} img`);
       let cpuCard = GAME.cpuHand[i-1];
       setImg(cpuCard, cpuImg, true);
@@ -232,18 +233,19 @@
 
   /** Sets the click events for selecting which cards to discard. */
   function setFigureEvents() {
-    for (let i = 1; i <= 5; i++) {
-      id(`player-card${i}`).addEventListener('click', (e) => {
-        onClickCard(e, i-1);
+    for (let i = 1; i <= HAND_SIZE; i++) {
+      id(`player-card${i}`).addEventListener('click', (event) => {
+        onClickCard(event, i - 1);
       });
     }
   }
 
   /**
-   * Converts a number representing a card in a standard 52 card deck to one of the
-   * images in the assets folder. Ordering is ace to king, in sets of spade, heart, club, diamond.
-   * @param {number} cardNum - 0-51 definining the card in a standard deck as ordered above
-   * @return {string} Image src file of the card
+   * Converts a number representing a card in a standard 52 card deck to one of the images in the
+   * assets folder. Ordering is ace to king, in sets of spade, heart, club, diamond.
+   * @param {object} card - The card object from the hand.
+   * @param {object} imgEl - The img element DOM object to be set.
+   * @param {boolean} isShowing - Whether to show the card or card back.
    */
   function setImg(card, imgEl, isShowing) {
     if (isShowing) {
@@ -275,14 +277,13 @@
       return breakTie(cpuRank, playerRank);
     } else if (cpuRank.rank > playerRank.rank) {
       return 'cpu';
-    } else {
-      return 'player';
     }
+    return 'player';
   }
 
   /**
    * Checks for best possible poker hand and returns the max poker rank.
-   * @param {object} hand - The hand being checked.
+   * @param {array} hand - The hand being checked.
    * @return {object} An object representing the possible poker hands with a valued ranking
    */
   function checkHand(hand) {
@@ -290,9 +291,8 @@
     let multiplesRank = checkMultiples(hand);
     if (straightFlushRank.rank > multiplesRank.rank) {
       return straightFlushRank;
-    } else {
-      return multiplesRank;
     }
+    return multiplesRank;
   }
 
   /**
@@ -308,20 +308,18 @@
         return 'tie';
       } else if (playerRank.pair > cpuRank.pair) {
         return 'player';
-      } else {
-        return 'cpu';
       }
+      return 'cpu';
     } else if (playerRank.top > cpuRank.top) {
       return 'player';
-    } else {
-      return 'cpu';
     }
+    return 'cpu';
   }
 
   /**
    * Checks for if the player has a straight, flush, royal flush, or straight
    * flush.
-   * @param {object} hand - The hand being checked.
+   * @param {array} hand - The hand being checked.
    * @return {object} The poker rank of the checked hand and the high card.
    */
   function checkStraightOrFlush(hand) {
@@ -351,13 +349,13 @@
 
   /**
    * Checks whether the hand has a straight.
-   * @param {object} hand - The player hand being checked.
+   * @param {array} hand - The player hand being checked.
    * @return {boolean} True if the hand has a straight.
    */
   function checkStraight(hand) {
     let sortedValues = getSortedNumFaceValues(hand);
     for (let i = 1; i < sortedValues.length; i++) {
-      if ((sortedValues[i] - sortedValues[i-1]) !== 1) {
+      if ((sortedValues[i] - sortedValues[i - 1]) !== 1) {
         return false;
       }
     }
@@ -366,12 +364,12 @@
 
   /**
    * Checks whether the hand has a flush.
-   * @param {object} hand - The player hand being checked.
+   * @param {array} hand - The player hand being checked.
    * @return {boolean} If the hand has a flush.
    */
   function checkFlush(hand) {
     let testSuit = hand[0].suit;
-    return hand.every( card => {
+    return hand.every(card => {
       return card.suit === testSuit;
     });
   }
@@ -379,13 +377,13 @@
   /**
    * Checks if the hand is a royal flush, it is only called if the player has a flush
    * and a straight.
-   * @param {object} hand - The player hand being checked.
+   * @param {array} hand - The player hand being checked.
    * @return {boolean} If the hand has a royal flush.
    */
   function checkRoyal(hand) {
     let sortedValues = getSortedNumFaceValues(hand);
-    for (let i = 8; i <+ 12; i++) {
-      if (sortedValues[i] != i) {
+    for (let i = 8; i <= sortedValues.length; i++) {
+      if (sortedValues[i] !== i) {
         return false;
       }
     }
@@ -395,13 +393,13 @@
   /**
    * Checks the possible multiples of cards that could be in the hand. It returns a
    * ranking based on the rank the hand would win.
-   * @param {object} hand - The player hand being checked.
+   * @param {array} hand - The player hand being checked.
    * @return {object} Poker hand ranking of given cards and the card values of multiples found.
    */
   function checkMultiples(hand) {
-    let cardCount = new Array(13).fill(0);
+    let cardCount = new Array(NUM_CARDS_IN_SUIT).fill(0);
     hand.forEach( card => {
-      let cardNum = Math.floor(card.num % 13);
+      let cardNum = Math.floor(card.num % NUM_CARDS_IN_SUIT);
       cardCount[cardNum]++;
     });
     let hasFour = false;
@@ -410,7 +408,7 @@
     let hasPair = false;
     let results = {};
     let top, pair, single;
-    cardCount.forEach( (value, i) => {
+    cardCount.forEach((value, i) => {
       if (value === 4) {
         hasFour = true;
         top = i;
@@ -458,7 +456,7 @@
    * @return {string} - The suit of the card
    */
   function getSuit(cardNum) {
-    return SUITS[Math.floor(cardNum / 13)];
+    return SUITS[Math.floor(cardNum / NUM_CARDS_IN_SUIT)];
   }
 
   /**
@@ -467,36 +465,37 @@
    * @return {string} - The value of the card
    */
   function getCardValue(cardNum) {
-    return CARDS[cardNum % 13];
+    return CARDS[cardNum % NUM_CARDS_IN_SUIT];
   }
 
   /**
    * Gets the numerical value (0-12) which represents each face value on a card and sort it
-   * @param {object} hand - The player hand being checked.
+   * @param {array} hand - The player hand being checked.
    * @return {array} Sorted numerical values for cards.
    */
   function getSortedNumFaceValues(hand) {
     let values = [];
     hand.forEach( card => {
-      let numValue = Math.floor(card.num % 13);
+      let numValue = Math.floor(card.num % NUM_CARDS_IN_SUIT);
       values.push(numValue);
     });
+
     // Use sort to put numbers in order
-    values.sort( (a, b) => {
-      return a-b;
+    values.sort((cardVal1, cardVal2) => {
+      return cardVal1 - cardVal2;
     });
     return values;
   }
 
   /**
    * Finds the highest numerical value card in a hand.
-   * @param {object} hand
+   * @param {array} hand - The array representing the players hand
    * @return {number} 0-12 Number value of highest cards face value.
    */
   function getHighestCard(hand) {
     let highCard = 0;
     hand.forEach( card => {
-      let cardVal = Math.floor(card.num % 13);
+      let cardVal = Math.floor(card.num % NUM_CARDS_IN_SUIT);
       highCard = Math.max(highCard, cardVal);
     });
     return highCard;
